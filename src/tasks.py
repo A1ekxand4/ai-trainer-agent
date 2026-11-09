@@ -13,7 +13,7 @@ def list_trainings() -> str:
     """Возвращает форматированный список тренировок."""
     if not TRAININGS:
         return "Список тренировок пуст. Добавьте первую тренировку!"
-    
+
     output = "--- Ваши тренировки ---\n"
     for index, training in enumerate(TRAININGS):
         output += f"{index}. {training['type']} - {training['duration']} мин.\n"
@@ -24,7 +24,7 @@ def get_stats() -> str:
     """Возвращает общую статистику."""
     if not TRAININGS:
         return "Статистика пуста. Нет данных о тренировках."
-    
+
     total_time = sum(t["duration"] for t in TRAININGS)
     return (
         f"\nВсего тренировок: {len(TRAININGS)}\n"
