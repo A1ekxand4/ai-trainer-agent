@@ -1,6 +1,7 @@
 """Интерфейс командной строки для ИИ-агента."""
 
 from rich import print as rprint
+from rich.markup import escape
 
 from .tasks import add_training, get_stats, list_trainings
 
@@ -57,9 +58,10 @@ def cli() -> None:
                     continue
 
                 add_training(training_type, duration)
+                safe_type = escape(training_type)
                 rprint(
                     f"[green]Успех![/green] Добавлена тренировка: "
-                    f"{training_type} на {duration} минут."
+                    f"{safe_type} на {duration} минут."
                 )
 
             elif command == "list":
