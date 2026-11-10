@@ -65,7 +65,7 @@ def cli() -> None:
                 )
 
             elif command == "list":
-                rprint(list_trainings())
+                print(list_trainings())
             elif command == "stats":
                 rprint(get_stats())
             elif command in ["exit", "quit"]:
@@ -81,6 +81,10 @@ def cli() -> None:
             # Обработка нажатия Ctrl+C для штатного выхода
             rprint("\n[italic]Завершение работы. До свидания![/italic]")
             break
+
         except Exception as e:
             # Перехват любых других непредвиденных ошибок, чтобы программа не падала
-            rprint(f"[bold red]Произошла непредвиденная ошибка:[/bold red] {e}")
+            safe_error = escape(str(e))
+            rprint(
+                f"[bold red]Произошла непредвиденная ошибка:[/bold red] {safe_error}"
+            )
