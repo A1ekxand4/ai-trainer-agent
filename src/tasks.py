@@ -26,7 +26,4 @@ def get_stats() -> str:
         return "Статистика пуста. Нет данных о тренировках."
 
     total_time = sum(t["duration"] for t in TRAININGS)
-    return (
-        f"\nВсего тренировок: {len(TRAININGS)}\n"
-        f"Общее время: {total_time} минут\n"
-    )
+    return f"\nВсего тренировок: {len(TRAININGS)}\nОбщее время: {total_time} минут\n"
