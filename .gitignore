@@ -5,3 +5,7 @@ venv/
 .idea/
 .vscode/
 .ruff_cache/
+data/
+.coverage
+htmlcov/
+.pytest_cache/
