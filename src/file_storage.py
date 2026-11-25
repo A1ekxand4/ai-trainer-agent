@@ -30,3 +30,7 @@ def load_storage() -> list[dict]:
     except FileNotFoundError:
         # Если файла нет (первый запуск) — возвращаем пустой список
         return []
+    except json.JSONDecodeError:
+        # Если файл поврежден (невалидный JSON), выводим сообщение
+        print(f"Ошибка: файл {_storage_path} поврежден. " "Загружен пустой список.")
+        return []
