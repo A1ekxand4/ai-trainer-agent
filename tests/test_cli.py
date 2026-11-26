@@ -40,3 +40,18 @@ def test_cli_list_and_stats(monkeypatch) -> None:
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
 
     cli.cli()
+
+
+def test_cli_delete_and_errors(monkeypatch) -> None:
+    """Тест команды delete и обработки ошибок."""
+    init_trainings([{"type": "бег", "duration": 30}])
+
+    inputs = iter(
+        ["delete", "delete текст", "delete 5", "delete 0", "exit"]
+    )
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+
+    cli.cli()
+
+    # После удаления 0 (бега) список должен стать пустым
+    assert len(get_trainings()) == 0
