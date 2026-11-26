@@ -9,20 +9,23 @@ from src.tasks import get_trainings, init_trainings
 
 def main() -> None:
     """Запуск приложения с загрузкой и сохранением состояния."""
-    # 1. Инициализация хранилища
     init_storage(Path("data", "trainings.json"))
 
-    # 2. Загрузка данных (при первом запуске вернется [])
     saved_trainings = load_storage()
 
-    # 3. Передача данных в модуль логики
-    init_trainings(saved_trainings)
+    # Если при загрузке произошла ошибка (вернулся None),
+    # мы не должны перезаписывать поврежденный файл.
+    if saved_trainings is None:
+        saved_trainings = []  # для работы в памяти
+        disable_saving = True
+    else:
+        disable_saving = False
 
-    # 4. Запуск интерфейса
+    init_trainings(saved_trainings)
     cli()
 
-    # 5. Сохранение данных при выходе
-    save_storage(get_trainings())
+    if not disable_saving:
+        save_storage(get_trainings())
 
 
 if __name__ == "__main__":
