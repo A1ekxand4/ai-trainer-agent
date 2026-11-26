@@ -22,8 +22,8 @@ def save_storage(data: list[dict]) -> None:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
 
-def load_storage() -> list[dict]:
-    """Загрузка данных из файла."""
+def load_storage() -> list[dict] | None:
+    """Загрузка данных из файла. Возвращает None при ошибке."""
     try:
         with _storage_path.open("r", encoding="utf-8") as file:
             return json.load(file)
@@ -31,6 +31,9 @@ def load_storage() -> list[dict]:
         # Если файла нет (первый запуск) — возвращаем пустой список
         return []
     except json.JSONDecodeError:
-        # Если файл поврежден (невалидный JSON), выводим сообщение
-        print(f"Ошибка: файл {_storage_path} поврежден. " "Загружен пустой список.")
-        return []
+        # Если файл поврежден, выводим сообщение и возвращаем None
+        print(
+            f"Ошибка: файл {_storage_path} поврежден. "
+            "Загружен пустой список, сохранение отключено."
+        )
+        return None
