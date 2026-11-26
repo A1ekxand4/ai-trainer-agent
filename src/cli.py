@@ -3,12 +3,13 @@
 from rich import print as rprint
 from rich.markup import escape
 
-from .tasks import add_training, get_stats, list_trainings
+from .tasks import add_training, delete_training, get_stats, list_trainings
 
 HELP_TEXT = """Доступные команды:
 [bold cyan]add <тип> <минуты>[/bold cyan] - добавить тренировку (пример: add бег 45)
 [bold cyan]list[/bold cyan] - показать все тренировки
 [bold cyan]stats[/bold cyan] - показать общую статистику
+[bold cyan]delete <индекс>[/bold cyan] - удалить тренировку по номеру
 [bold cyan]help[/bold cyan] - показать эту справку
 [bold cyan]exit[/bold cyan] - выйти из программы"""
 
@@ -66,6 +67,18 @@ def cli() -> None:
 
             elif command == "list":
                 print(list_trainings())
+            elif command == "delete":
+                if len(args) != 1:
+                    rprint("[bold red]Ошибка:[/bold red] укажите индекс тренировки.")
+                    continue
+                try:
+                    idx = int(args[0])
+                    if delete_training(idx):
+                        rprint("[green]Успех![/green] Тренировка удалена.")
+                    else:
+                        rprint("[bold red]Ошибка:[/bold red] тренировка не найдена.")
+                except ValueError:
+                    rprint("[bold red]Ошибка:[/bold red] индекс должен быть числом.")
             elif command == "stats":
                 rprint(get_stats())
             elif command in ["exit", "quit"]:
