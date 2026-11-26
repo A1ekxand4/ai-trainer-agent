@@ -30,9 +30,8 @@ def test_load_broken_json(tmp_path: Path) -> None:
     test_file = tmp_path / "broken.json"
     init_storage(test_file)
 
-    # Записываем мусор в файл (невалидный JSON)
     with test_file.open("w", encoding="utf-8") as f:
         f.write("{broken: ")
 
-    # Функция должна перехватить ошибку и вернуть пустой список
-    assert load_storage() == []
+    # Теперь функция должна вернуть None (чтобы main.py не сохранял пустоту)
+    assert load_storage() is None
