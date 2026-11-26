@@ -38,3 +38,11 @@ def get_stats() -> str:
 
     total_time = sum(t["duration"] for t in _trainings)
     return f"\nВсего тренировок: {len(_trainings)}\nОбщее время: {total_time} минут\n"
+
+
+def delete_training(index: int) -> bool:
+    """Удаляет тренировку по индексу. Возвращает True при успехе."""
+    if 0 <= index < len(_trainings):
+        _trainings.pop(index)
+        return True
+    return False
